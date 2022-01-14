@@ -9,7 +9,7 @@ import {
 import Users from './users/pages/Users';
 import NewPlace from './places/pages/NewPlace';
 
-const App = () => {
+function App() {
     return (
         <Router>
             <Switch>
