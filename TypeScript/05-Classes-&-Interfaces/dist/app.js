@@ -1,21 +1,27 @@
 "use strict";
-class Department {
-    constructor(n) {
-        this.employees = [];
-        this.name = n;
+var add;
+add = function (n1, n2) {
+    return n1 + n2;
+};
+var Person = (function () {
+    function Person(n) {
+        this.age = 30;
+        if (n) {
+            this.name = n;
+        }
     }
-    addEmployee(employee) {
-        this.employees.push(employee);
-    }
-    describe() {
-        console.log('Department: ' + this.name);
-    }
-    printCount() {
-        console.log(this.employees.length);
-    }
-}
-const accounting = new Department('Accounting');
-accounting.addEmployee('Pesho');
-accounting.describe();
-accounting.printCount();
+    Person.prototype.greet = function (phrase) {
+        if (this.name) {
+            console.log(phrase + ' ' + this.name);
+        }
+        else {
+            console.log('Hi!');
+        }
+    };
+    return Person;
+}());
+var user1;
+user1 = new Person();
+user1.greet('Hi there - I am');
+console.log(user1);
 //# sourceMappingURL=app.js.map
