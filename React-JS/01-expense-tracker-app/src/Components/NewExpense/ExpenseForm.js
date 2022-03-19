@@ -21,17 +21,17 @@ const ExpenseForm = (props) => {
     //             enteredTitle: event.target.value
     //         });
     //     });
-    // }
+    // };
 
     const titleChangeHandler = event => {
         setEnteredTitle(event.target.value);
-    }
+    };
     const amountChangeHandler = event => {
         setEnteredAmount(event.target.value);
-    }
+    };
     const dateChangeHandler = event => {
         setEnteredDate(event.target.value);
-    }
+    };
 
     const submitHandler = event => {
         event.preventDefault();
@@ -47,7 +47,7 @@ const ExpenseForm = (props) => {
         setEnteredTitle('');
         setEnteredAmount('');
         setEnteredAmount('');
-    }
+    };
 
     return (
         <form onSubmit={submitHandler}>
