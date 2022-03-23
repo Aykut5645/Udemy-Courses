@@ -1,6 +1,6 @@
 import React from 'react';
 
-function NewPlace() {
+const NewPlace = () => {
     return (
         <h1>New Places</h1>
     );
