@@ -3,11 +3,11 @@ main {
 }
 
 .background {
-    background: url('../images/plans-background.jpg') center/cover;
-    filter: grayscale(50%);
-    position: fixed;
-    height: 100vh;
+    background: url("../images/plans-background.jpg") center/cover;
+    filter: grayscale(40%);
     width: 100vw;
+    height: 100vh;
+    position: fixed;
     z-index: -1;
 }
 
@@ -37,11 +37,11 @@ main {
     position: absolute;
     top: 0;
     right: 0;
-    font-size: 0.8rem;
-    padding: 0.5rem;
     margin: 1.2rem;
+    font-size: 0.8rem;
     color: white;
     background: #ff5454;
+    padding: 0.5rem;
 }
 
 .package__subtitle {

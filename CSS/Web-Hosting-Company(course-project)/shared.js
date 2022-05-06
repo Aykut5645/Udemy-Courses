@@ -1,20 +1,45 @@
-const html = {
-    modal: () => document.querySelector('.modal'),
-    backgdrop: () => document.querySelector('.backdrop'),
-    selectPlanButtons: () => document.querySelectorAll('.plan button'),
-    modalNoButton: () => document.querySelector('.modal__action--negative')
-};
+var backdrop = document.querySelector(".backdrop");
+var modal = document.querySelector(".modal");
+var modalNoButton = document.querySelector(".modal__action--negative");
+var selectPlanButtons = document.querySelectorAll(".plan button");
+var toggleButton = document.querySelector(".toggle-button");
+var mobileNav = document.querySelector(".mobile-nav");
 
-html.backgdrop().addEventListener('click', closeModal);
-html.modalNoButton().addEventListener('click', closeModal);
-html.selectPlanButtons().forEach(currentButton => currentButton.addEventListener('click', openModal));
+// console.dir(backdrop.style['background-image']);
+
+// console.dir(backdrop);
+for (var i = 0; i < selectPlanButtons.length; i++) {
+  selectPlanButtons[i].addEventListener("click", function() {
+    // modal.style.display = "block";
+    // backdrop.style.display = "block";
+    // modal.className = 'open'; // This will actually overwrite the complete class list
+    modal.classList.add("open");
+    backdrop.classList.add("open");
+  });
+}
+
+backdrop.addEventListener("click", function() {
+  // mobileNav.style.display = 'none';
+  mobileNav.classList.remove("open");
+  closeModal();
+});
+
+if (modalNoButton) {
+  modalNoButton.addEventListener("click", closeModal);
+}
 
 function closeModal() {
-    html.modal().style.display = 'none';
-    html.backgdrop().style.display = 'none';
+  //   backdrop.style.display = "none";
+  //   modal.style.display = "none";
+  if (modal) {
+    modal.classList.remove("open");
+  }
+  backdrop.classList.remove("open");
 }
 
-function openModal() {
-    html.modal().style.display = 'block';
-    html.backgdrop().style.display = 'block';
-}
+toggleButton.addEventListener("click", function() {
+  // mobileNav.style.display = 'block';
+  // backdrop.style.display = 'block';
+  mobileNav.classList.add("open");
+  backdrop.classList.add("open");
+});
