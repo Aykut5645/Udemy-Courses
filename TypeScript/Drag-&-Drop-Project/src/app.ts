@@ -13,22 +13,57 @@ function validate(validatableInput: Validatable) {
     if (validatableInput.required) {
         isValid = isValid && validatableInput.value.toString().trim().length !== 0;
     }
-    if (validatableInput.minLength && typeof validatableInput.value === 'string') {
-        isValid = isValid && validatableInput.value.length >= validatableInput.minLength;
+    if (typeof validatableInput.value === 'string') {
+        if (validatableInput.minLength) {
+            isValid = isValid && validatableInput.value.length >= validatableInput.minLength;
+        }
+        if (validatableInput.maxLength) {
+            isValid = isValid && validatableInput.value.length <= validatableInput.maxLength;
+        }
     }
-    if (validatableInput.maxLength && typeof validatableInput.value === 'string') {
-        isValid = isValid && validatableInput.value.length <= validatableInput.maxLength;
-    }
-    if (validatableInput.min && typeof validatableInput.value === 'number') {
-        isValid = isValid && validatableInput.value >= validatableInput.min;
-    }
-    if (validatableInput.max && typeof validatableInput.value === 'number') {
-        isValid = isValid && validatableInput.value <= validatableInput.max;
+    if (typeof validatableInput.value === 'number') {
+        if (validatableInput.min) {
+            isValid = isValid && validatableInput.value >= validatableInput.min;
+        }
+        if (validatableInput.max) {
+            isValid = isValid && validatableInput.value <= validatableInput.max;
+        }
     }
     return isValid;
 }
 
-// Project input class
+// ProjectList class
+class ProjectList {
+    templateElement: HTMLTemplateElement;
+    rootElement: HTMLDivElement;
+    element: HTMLElement;
+
+    constructor(private type: 'active' | 'finished') {
+        this.templateElement = document.getElementById('project-list')! as HTMLTemplateElement;
+        this.rootElement = document.getElementById('app')! as HTMLDivElement;
+
+        const importedNode = document.importNode(
+            this.templateElement.content,
+            true
+        );
+        this.element = importedNode.firstElementChild as HTMLElement;
+        this.element.id = `${this.type}-projects`;
+
+        this.attach();
+        this.renderContent();
+    }
+
+    private renderContent() {
+        this.element.querySelector('ul')!.id = `${this.type}-projects-list`;
+        this.element.querySelector('h2')!.textContent = `${this.type.toLocaleUpperCase()} PROJECTS`;
+    }
+
+    private attach() {
+        this.rootElement.appendChild(this.element);
+    }
+}
+
+// ProjectInput class
 class ProjectInput {
     templateElement: HTMLTemplateElement;
     rootElement: HTMLDivElement;
@@ -116,3 +151,6 @@ class ProjectInput {
 }
 
 new ProjectInput();
+
+new ProjectList('active');
+new ProjectList('finished');
