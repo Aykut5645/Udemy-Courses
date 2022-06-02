@@ -1,7 +1,25 @@
+// Project Type
+enum ProjectStatus {
+    Active,
+    Finished
+}
+
+class Project {
+    constructor(
+        public id: string,
+        public title: string,
+        public description: string,
+        public people: number,
+        public status: ProjectStatus
+    ) { }
+}
+
 // Project State Management
+type Listener = (items: Project[]) => void;
+
 class ProjectState {
-    private projects: any[] = [];
-    private listeners: any[] = [];
+    private projects: Project[] = [];
+    private listeners: Listener[] = [];
     private static instance: ProjectState;
 
     private constructor() { }
@@ -14,18 +32,19 @@ class ProjectState {
         return this.instance;
     }
 
-    addListener(listenerFn: Function) {
+    addListener(listenerFn: Listener) {
         this.listeners.push(listenerFn);
     }
 
     addProject(title: string, description: string, numOfPeople: number) {
-        let newProject = {
-            id: Math.random().toString(),
+        let createdProject = new Project(
+            Math.random().toString(),
             title,
             description,
-            people: numOfPeople
-        };
-        this.projects.push(newProject);
+            numOfPeople,
+            ProjectStatus.Active
+        );
+        this.projects.push(createdProject);
         for (const listenerFn of this.listeners) {
             listenerFn(this.projects.slice());
         }
@@ -74,7 +93,7 @@ class ProjectList {
     rootElement: HTMLDivElement;
     element: HTMLElement;
 
-    assignedProjects: any[];
+    assignedProjects: Project[];
 
     constructor(private type: 'active' | 'finished') {
         this.templateElement = document.getElementById('project-list')! as HTMLTemplateElement;
@@ -88,8 +107,14 @@ class ProjectList {
         this.element = importedNode.firstElementChild as HTMLElement;
         this.element.id = `${this.type}-projects`;
 
-        projectState.addListener((projects: any[]) => {
-            this.assignedProjects = projects;
+        projectState.addListener((projects: Project[]) => {
+            const relevantProjects = projects.filter(p => {
+                if (this.type === 'active') {
+                    return p.status === ProjectStatus.Active;
+                }
+                return p.status === ProjectStatus.Finished;
+            });
+            this.assignedProjects = relevantProjects;
             this.renderProjects();
         });
 
@@ -99,7 +124,8 @@ class ProjectList {
 
     private renderProjects() {
         const listElement = document.getElementById(`${this.type}-projects-list`)! as HTMLUListElement;
-        
+        listElement.innerHTML = '';
+
         for (const projectItem of this.assignedProjects) {
             let liElement = document.createElement('li');
             liElement.textContent = projectItem.title;
