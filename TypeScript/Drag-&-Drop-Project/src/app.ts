@@ -126,6 +126,27 @@ abstract class Component<T extends HTMLElement, U extends HTMLElement> {
     abstract configure(): void;
 }
 
+// Project Item Class
+class ProjectItem extends Component<HTMLUListElement, HTMLLIElement> {
+    private project: Project;
+
+    constructor(rootId: string, project: Project) {
+        super('single-project', rootId, project.id);
+        this.project = project;
+
+        this.configure();
+        this.renderContent();
+    }
+
+    configure() { }
+    
+    renderContent() {
+        this.element.querySelector('h2')!.textContent = this.project.title;
+        this.element.querySelector('h3')!.textContent = this.project.people.toString();
+        this.element.querySelector('p')!.textContent = this.project.description;
+    }
+}
+
 // ProjectList class
 class ProjectList extends Component<HTMLDivElement, HTMLElement>{
     assignedProjects: Project[];
@@ -157,13 +178,12 @@ class ProjectList extends Component<HTMLDivElement, HTMLElement>{
     }
 
     private renderProjects() {
-        const listElement = document.getElementById(`${this.type}-projects-list`)! as HTMLUListElement;
+        let listId = `${this.type}-projects-list`;
+        const listElement = document.getElementById(listId)! as HTMLUListElement;
         listElement.innerHTML = '';
 
         for (const projectItem of this.assignedProjects) {
-            let liElement = document.createElement('li');
-            liElement.textContent = projectItem.title;
-            listElement.appendChild(liElement);
+            new ProjectItem(listId, projectItem);
         }
     }
 }
