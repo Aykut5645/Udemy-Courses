@@ -7,17 +7,9 @@ import { CockpitComponent } from './cockpit/cockpit.component';
 import { ServerElementComponent } from './server-element/server-element.component';
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        CockpitComponent,
-        ServerElementComponent
-    ],
-    imports: [
-        BrowserModule,
-        FormsModule,
-    ],
+    declarations: [AppComponent, CockpitComponent, ServerElementComponent],
+    imports: [BrowserModule, FormsModule],
     providers: [],
-    bootstrap: [AppComponent]
+    bootstrap: [AppComponent],
 })
-export class AppModule {
-}
+export class AppModule {}

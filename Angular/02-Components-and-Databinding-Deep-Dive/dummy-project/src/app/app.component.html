@@ -1,0 +1,28 @@
+<div class="container">
+    <app-cockpit
+        (serverCreated)="onServerAdded($event)"
+        (blueprintCreated)="onBlueprintAdded($event)"
+    ></app-cockpit>
+    <hr />
+    <div class="row">
+        <div class="col-xs-12">
+            <app-server-element
+                *ngFor="let serverElement of serverElements"
+                [element]="serverElement"
+                [name]="serverElement.name"
+            >
+                <ul #listContent>
+                    <li>JOHN</li>
+                    <li>Max</li>
+                    <li>Matthew</li>
+                </ul>
+            </app-server-element>
+        </div>
+        <button class="btn btn-primary" (click)="onChangeFirst()">
+            Change First Element
+        </button>
+        <button class="btn btn-danger" (click)="onDestroyFirst()">
+            Destroy First Component
+        </button>
+    </div>
+</div>
