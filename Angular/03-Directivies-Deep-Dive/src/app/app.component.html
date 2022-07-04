@@ -18,7 +18,15 @@
                         {{ oddNumber }}
                     </li>
                 </div>
-                <div *ngIf="!onlyOdd">
+<!--                <div *ngIf="!onlyOdd">-->
+<!--                    <li-->
+<!--                        class="list-group-item"-->
+<!--                        *ngFor="let evenNumber of evenNumbers"-->
+<!--                    >-->
+<!--                        {{ evenNumber }}-->
+<!--                    </li>-->
+<!--                </div>-->
+                <div *appUnless="onlyOdd">
                     <li
                         class="list-group-item"
                         *ngFor="let evenNumber of evenNumbers"
@@ -33,5 +41,13 @@
         </div>
     </div>
     <p appBasicHighlight>Hello from basic highlight directive</p>
-    <p appBetterHighlight>Hello from better highlight directive</p>
+    <p appBetterHighlight [defaultColor]="'yellow'" highlightColor="red">
+        Hello from better highlight directive
+    </p>
+    <div [ngSwitch]="value">
+        <p *ngSwitchCase="5">Value is 5</p>
+        <p *ngSwitchCase="15">Value is 15</p>
+        <p *ngSwitchCase="100">Value is 100</p>
+        <p *ngSwitchDefault>Default value</p>
+    </div>
 </div>
